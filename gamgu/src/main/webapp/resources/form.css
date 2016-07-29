@@ -1,3 +1,8 @@
+body{
+	font-family:sans-serif;
+	font-weight:bold; 
+} 
+
 #principal{
 	padding: 10px; 
 	border-style: solid; 
@@ -7,9 +12,11 @@
 
 #titulo{
 	font-size: x-small; 
-	font-family:sans-serif; 
-	font-weight:bold; 
 	color: darkgrey;
+}
+
+#senha{
+	width: 50%;
 }
 
 #interna{
@@ -17,7 +24,43 @@
 	background-color:whitesmoke; 
 	padding: 10px; 
 	padding-left:35px; 
+	padding-bottom:35px; 
 	border-style: solid; 
 	border-color:whitesmoke; 
 	border-width: 1px;
+}
+
+#resultado{
+	margin-top: 10px;
+	height: auto;
+}
+
+#nota{
+	padding-left: 10px; 
+	padding-right: 10px; 
+	padding-bottom:3px; 
+	padding-top:3px; 
+	background-color: gray; 
+	color: white;
+	font-size: small;
+	float: left;
+	width:6%;
+	text-align: center;
+}
+
+#meio{
+	margin:2px;
+	float:left;
+}
+
+#complexidade{
+	padding-left: 10px; 
+	padding-right: 10px; 
+	padding-bottom:3px; 
+	padding-top:3px; 
+	background-color: red; 
+	color: white;
+	font-size: small;
+	width: auto;
+	float:left;
 }

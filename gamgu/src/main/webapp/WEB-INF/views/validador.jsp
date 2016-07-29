@@ -5,8 +5,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Spring MVC Tutorial</title>
+    <title>Gamgu</title>
     <script type="text/javascript" src="<c:url value="/resources/json2.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/resources/script.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 	<script type="text/javascript" src="<c:url value="/resources/jqueryform/2.8/jquery.form.js" />"></script>
 	<link href="<c:url value="/resources/form.css" />" rel="stylesheet"  type="text/css" />	
@@ -18,7 +19,7 @@
 				  cache: false,    
 				  data:'senha=' + $("#senha").val(),
 				  success: function(retorno){
-				   		$('#nota').text(retorno.nota);
+				   		$('#nota').text(retorno.nota+'%');
 				   		$('#complexidade').text(retorno.complexidade);
 				  },
 				  error: function(){      
@@ -33,7 +34,11 @@
     	<a id="titulo">AVALIADOR DE SEGURANÇA DE SENHA</a><br/>
 		<div id="interna">
     		<input type="password" id="senha" onkeyup="validarSenha();"/><br/>
-    		<div id="resultado" style="margin-top: 10px;"><a id="nota" style="padding-left: 10px; padding-right: 10px; padding-bottom:3px; padding-top:3px; margin-right:5px; background-color: gray; color: white;">100%</a><a id="complexidade">Muito curta</a></div>
+    		<div id="resultado">
+    			<div id="nota">100%</div>
+    			<div id="meio"></div>
+    			<div id="complexidade">Muito curta</div>
+    		</div>
     	</div>
     </div>
 </body>
