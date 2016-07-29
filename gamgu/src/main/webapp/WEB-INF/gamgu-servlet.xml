@@ -25,6 +25,8 @@
 	</bean>	
  
  	<mvc:annotation-driven/>
+ 	
+ 	<mvc:resources mapping="/resources/**" location="/resources/" />
  
     <bean
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -35,4 +37,7 @@
             <value>.jsp</value>
         </property>
     </bean>
+    	
+    <mvc:view-controller path="/" view-name="validador"/>
+    <mvc:view-controller path="/index" view-name="validador"/>
 </beans>

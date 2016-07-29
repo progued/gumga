@@ -1,0 +1,23 @@
+#principal{
+	padding: 10px; 
+	border-style: solid; 
+	border-color:whitesmoke; 
+	border-width: 2px;
+}
+
+#titulo{
+	font-size: x-small; 
+	font-family:sans-serif; 
+	font-weight:bold; 
+	color: darkgrey;
+}
+
+#interna{
+	margin-top:10px; 
+	background-color:whitesmoke; 
+	padding: 10px; 
+	padding-left:35px; 
+	border-style: solid; 
+	border-color:whitesmoke; 
+	border-width: 1px;
+}

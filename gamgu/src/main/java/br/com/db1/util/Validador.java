@@ -12,6 +12,7 @@ public class Validador {
 		Resultado resultado = new Resultado();
 		
 		resultado.setNota(nota);
+		resultado.setComplexidade("Muito curta");
 		
 		return resultado;
 	}
