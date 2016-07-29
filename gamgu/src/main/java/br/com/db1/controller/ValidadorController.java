@@ -1,15 +1,19 @@
 package br.com.db1.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import br.com.db1.bean.Resultado;
+import br.com.db1.util.Validador;
+
+@RestController
 public class ValidadorController {
-	   @RequestMapping("/hello")
-	    public String hello( @RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
-	        model.addAttribute("name", name);
-	        return "helloworld";
+	   
+		@ResponseBody
+		@RequestMapping(value="/validador")
+	    public Resultado hello( @RequestParam(value = "senha", required = false, defaultValue = "") String senha) {
+	        return Validador.validaSenha(senha);
 	    }
 }
