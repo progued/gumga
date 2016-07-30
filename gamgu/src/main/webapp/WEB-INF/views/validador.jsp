@@ -33,40 +33,23 @@
 						else if (nota >= 80 && nota <= 100)
 							$('#complexidade').css('background-color', 'darkgreen');
 				   		<!--
-				   		$('#numeroDeCaracteres').text('numeroDeCaracteres                    :'+retorno.numeroDeCaracteres                    );
-				   		$('#letrasMaiusculas').text('letrasMaiusculas                      :'+retorno.letrasMaiusculas                      );
-				   		$('#letrasMinusculas').text('letrasMinusculas                      :'+retorno.letrasMinusculas                      );
-				   		$('#numeros').text('numeros                               :'+retorno.numeros                               );
-				   		$('#simbolos').text('simbolos                              :'+retorno.simbolos                              );
-				   		$('#numerosDoMeioOuSimbolos').text('numerosDoMeioOuSimbolos               :'+retorno.numerosDoMeioOuSimbolos               );
-				   		$('#requisitos').text('requisitos                            :'+retorno.requisitos                            );
-				   		$('#apenasLetras').text('apenasLetras                          :'+retorno.apenasLetras                          );
-				   		$('#apenasNumeros').text('apenasNumeros                         :'+retorno.apenasNumeros                         );
-				   		$('#caracteresRepetidos').text('caracteresRepetidos                   :'+retorno.caracteresRepetidos                   );
-				   		$('#letrasMaiusculasConsecutivas').text('letrasMaiusculasConsecutivas          :'+retorno.letrasMaiusculasConsecutivas          );
-				   		$('#letrasMinusculasConsecutivas').text('letrasMinusculasConsecutivas          :'+retorno.letrasMinusculasConsecutivas          );
-				   		$('#numerosConsecutivos').text('numerosConsecutivos                   :'+retorno.numerosConsecutivos                   );
-				   		$('#tresOuMaisLetrasSequenciais').text('tresOuMaisLetrasSequenciais           :'+retorno.tresOuMaisLetrasSequenciais           );
-				   		$('#tresOuMaisNumerosSequenciais').text('tresOuMaisNumerosSequenciais          :'+retorno.tresOuMaisNumerosSequenciais          );
-				   		$('#tresOuMaisSimbolosSequenciais').text('tresOuMaisSimbolosSequenciais         :'+retorno.tresOuMaisSimbolosSequenciais         );
-				   		$('#pontuacaoNumeroDeCaracteres').text('pontuacaoNumeroDeCaracteres           :'+retorno.pontuacaoNumeroDeCaracteres           );
-				   		$('#pontuacaoLetrasMaiusculas').text('pontuacaoLetrasMaiusculas             :'+retorno.pontuacaoLetrasMaiusculas             );
-				   		$('#pontuacaoLetrasMinusculas').text('pontuacaoLetrasMinusculas             :'+retorno.pontuacaoLetrasMinusculas             );
-				   		$('#pontuacaoNumeros').text('pontuacaoNumeros                      :'+retorno.pontuacaoNumeros                      );
-				   		$('#pontuacaoSimbolos').text('pontuacaoSimbolos                     :'+retorno.pontuacaoSimbolos                     );
-				   		$('#pontuacaoNumerosDoMeioOuSimbolos').text('pontuacaoNumerosDoMeioOuSimbolos      :'+retorno.pontuacaoNumerosDoMeioOuSimbolos      );
-				   		$('#pontuacaoRequisitos').text('pontuacaoRequisitos                   :'+retorno.pontuacaoRequisitos                   );
-				   		$('#pontuacaoApenasLetras').text('pontuacaoApenasLetras                 :'+retorno.pontuacaoApenasLetras                 );
-				   		$('#pontuacaoApenasNumeros').text('pontuacaoApenasNumeros                :'+retorno.pontuacaoApenasNumeros                );
-				   		$('#pontuacaoCaracteresRepetidos').text('pontuacaoCaracteresRepetidos          :'+retorno.pontuacaoCaracteresRepetidos          );
-				   		$('#pontuacaoLetrasMaiusculasConsecutivas').text('pontuacaoLetrasMaiusculasConsecutivas :'+retorno.pontuacaoLetrasMaiusculasConsecutivas );
-				   		$('#pontuacaoLetrasMinusculasConsecutivas').text('pontuacaoLetrasMinusculasConsecutivas :'+retorno.pontuacaoLetrasMinusculasConsecutivas );
-				   		$('#pontuacaoNumerosConsecutivos').text('pontuacaoNumerosConsecutivos          :'+retorno.pontuacaoNumerosConsecutivos          );
-				   		$('#pontuacaoTresOuMaisLetrasSequenciais').text('pontuacaoTresOuMaisLetrasSequenciais  :'+retorno.pontuacaoTresOuMaisLetrasSequenciais  );
-				   		$('#pontuacaoTresOuMaisNumerosSequenciais').text('pontuacaoTresOuMaisNumerosSequenciais :'+retorno.pontuacaoTresOuMaisNumerosSequenciais );
-				   		$('#pontuacaoTresOuMaisSimbolosSequenciais').text('pontuacaoTresOuMaisSimbolosSequenciais:'+retorno.pontuacaoTresOuMaisSimbolosSequenciais);
-						-->
-
+				   		$('#numeroDeCaracteres').text('numeroDeCaracteres                    :'+retorno.numeroDeCaracteres+' (+'+retorno.pontuacaoNumeroDeCaracteres+')');
+				   		$('#letrasMaiusculas').text('letrasMaiusculas                      :'+retorno.letrasMaiusculas+' (+'+retorno.pontuacaoLetrasMaiusculas+')');    
+				   		$('#letrasMinusculas').text('letrasMinusculas                      :'+retorno.letrasMinusculas+' (+'+retorno.pontuacaoLetrasMinusculas+')');    
+				   		$('#numeros').text('numeros                               :'+retorno.numeros+' (+'+retorno.pontuacaoNumeros+')');                      
+				   		$('#simbolos').text('simbolos                              :'+retorno.simbolos+' (+'+retorno.pontuacaoSimbolos+')');                    
+				   		$('#numerosDoMeioOuSimbolos').text('numerosDoMeioOuSimbolos               :'+retorno.numerosDoMeioOuSimbolos+' (+'+retorno.pontuacaoNumerosDoMeioOuSimbolos+')');               
+				   		$('#requisitos').text('requisitos                            :'+retorno.requisitos+' (+'+retorno.pontuacaoRequisitos+')');                            
+				   		$('#apenasLetras').text('apenasLetras                          :'+retorno.apenasLetras+' (-'+retorno.pontuacaoApenasLetras+')');                        
+				   		$('#apenasNumeros').text('apenasNumeros                         :'+retorno.apenasNumeros+' (-'+retorno.pontuacaoApenasNumeros+')');                      
+				   		$('#caracteresRepetidos').text('caracteresRepetidos                   :'+retorno.caracteresRepetidos+' (-'+retorno.pontuacaoCaracteresRepetidos+')');                   
+				   		$('#letrasMaiusculasConsecutivas').text('letrasMaiusculasConsecutivas          :'+retorno.letrasMaiusculasConsecutivas+' (-'+retorno.pontuacaoLetrasMaiusculasConsecutivas+')');          
+				   		$('#letrasMinusculasConsecutivas').text('letrasMinusculasConsecutivas          :'+retorno.letrasMinusculasConsecutivas+' (-'+retorno.pontuacaoLetrasMinusculasConsecutivas+')');          
+				   		$('#numerosConsecutivos').text('numerosConsecutivos                   :'+retorno.numerosConsecutivos+' (-'+retorno.pontuacaoNumerosConsecutivos+')');                   
+				   		$('#tresOuMaisLetrasSequenciais').text('tresOuMaisLetrasSequenciais           :'+retorno.tresOuMaisLetrasSequenciais+' (-'+retorno.pontuacaoTresOuMaisLetrasSequenciais+')');           
+				   		$('#tresOuMaisNumerosSequenciais').text('tresOuMaisNumerosSequenciais          :'+retorno.tresOuMaisNumerosSequenciais+' (-'+retorno.pontuacaoTresOuMaisNumerosSequenciais+')');          
+				   		$('#tresOuMaisSimbolosSequenciais').text('tresOuMaisSimbolosSequenciais         :'+retorno.tresOuMaisSimbolosSequenciais+' (-'+retorno.pontuacaoTresOuMaisSimbolosSequenciais+')');         
+				   		-->
 				  },
 				  error: function(){      
 				   		alert('Falha durante a tentativa de validação...');
@@ -87,39 +70,23 @@
     		</div>
     	</div>
     </div>
-<!-- 
-<h5	id="numeroDeCaracteres"/>
-<h5	id="letrasMaiusculas"/>
-<h5	id="letrasMinusculas"/>
-<h5	id="numeros"/>
-<h5 id="simbolos" />
-<h5 id="numerosDoMeioOuSimbolos" />
-<h5 id="requisitos" />
-<h5 id="apenasLetras" />
-<h5 id="apenasNumeros" />
-<h5 id="caracteresRepetidos" />
-<h5 id="letrasMaiusculasConsecutivas" />
-<h5 id="letrasMinusculasConsecutivas" />
-<h5 id="numerosConsecutivos" />
-<h5 id="tresOuMaisLetrasSequenciais" />
-<h5 id="tresOuMaisNumerosSequenciais" />
-<h5 id="tresOuMaisSimbolosSequenciais" />
-<h5 id="pontuacaoNumeroDeCaracteres" />
-<h5 id="pontuacaoLetrasMaiusculas" />
-<h5 id="pontuacaoLetrasMinusculas" />
-<h5 id="pontuacaoNumeros" />
-<h5 id="pontuacaoSimbolos" />
-<h5 id="pontuacaoNumerosDoMeioOuSimbolos" />
-<h5 id="pontuacaoRequisitos" />
-<h5 id="pontuacaoApenasLetras" />
-<h5 id="pontuacaoApenasNumeros" />
-<h5 id="pontuacaoCaracteresRepetidos" />
-<h5 id="pontuacaoLetrasMaiusculasConsecutivas" />
-<h5 id="pontuacaoLetrasMinusculasConsecutivas" />
-<h5 id="pontuacaoNumerosConsecutivos" />
-<h5 id="pontuacaoTresOuMaisLetrasSequenciais" />
-<h5 id="pontuacaoTresOuMaisNumerosSequenciais" />
-<h5 id="pontuacaoTresOuMaisSimbolosSequenciais" />
--->    
+ <!-- 
+<h6	id="numeroDeCaracteres" style="color: blue"/>
+<h6	id="letrasMaiusculas" style="color: blue"/>
+<h6	id="letrasMinusculas" style="color: blue"/>
+<h6	id="numeros" style="color: blue"/>
+<h6 id="simbolos" style="color: blue"/>
+<h6 id="numerosDoMeioOuSimbolos" style="color: blue"/>
+<h6 id="requisitos" style="color: blue"/>
+<h6 id="apenasLetras" style="color: red"/>
+<h6 id="apenasNumeros" style="color: red"/>
+<h6 id="caracteresRepetidos" style="color: red"/>
+<h6 id="letrasMaiusculasConsecutivas" style="color: red"/>
+<h6 id="letrasMinusculasConsecutivas" style="color: red"/>
+<h6 id="numerosConsecutivos" style="color: red"/>
+<h6 id="tresOuMaisLetrasSequenciais" style="color: red"/>
+<h6 id="tresOuMaisNumerosSequenciais" style="color: red"/>
+<h6 id="tresOuMaisSimbolosSequenciais" style="color: red"/>
+-->
 </body>
 </html>

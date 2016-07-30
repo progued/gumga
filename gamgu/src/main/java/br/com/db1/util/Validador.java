@@ -48,17 +48,17 @@ public class Validador {
 				
 		String caracter = "";
 		String caracterAuxiliar = "";
-		
+
 		for (int i = 0; i < tamanhoRealDaSenha; i++) {
 			caracter = String.valueOf(senhaSemEspacosEmBranco.charAt(i));
 			if(caracter.matches("[A-Z]")){
-				if(posicaoUltimaLetrasMaiusculas != 0 && (posicaoUltimaLetrasMaiusculas + 1) == i)
+				if(posicaoUltimaLetrasMaiusculas >= 0 && (posicaoUltimaLetrasMaiusculas + 1) == i)
 					contadorLetrasMaiusculasConsecutivas++;
 	
 				posicaoUltimaLetrasMaiusculas=i;
 				contadorLetrasMaiusculas++;
 			}else if(caracter.matches("[a-z]")){
-				if(posicaoUltimaLetrasMinusculas != 0 && (posicaoUltimaLetrasMinusculas + 1) == i)
+				if(posicaoUltimaLetrasMinusculas >= 0 && (posicaoUltimaLetrasMinusculas + 1) == i)
 					contadorLetrasMinusculasConsecutivas++;
 	
 				posicaoUltimaLetrasMinusculas=i;
@@ -67,7 +67,7 @@ public class Validador {
 				if (i > 0 && i < (tamanhoRealDaSenha - 1))  
 					contadorNumeroDoMeioSimbolo++; 
 				
-				if(posicaoUltimoNumero != 0 && (posicaoUltimoNumero + 1) == i)
+				if(posicaoUltimoNumero >= 0 && (posicaoUltimoNumero + 1) == i)
 					contadorNumerosConsecutivos++;
 	
 				posicaoUltimoNumero = i;
@@ -85,13 +85,13 @@ public class Validador {
 				caracterAuxiliar = String.valueOf(senhaSemEspacosEmBranco.charAt(j));
 				if(caracter.equals(caracterAuxiliar) && i != j){
 					caracterJaExiste = true;
-					contadorRepeticoesIncremental = Double.valueOf(Math.abs(tamanhoRealDaSenha/(j-i)));
+					contadorRepeticoesIncremental += Math.abs((double)tamanhoRealDaSenha/(j-i));
 				}
 			}
 			if (caracterJaExiste) { 
 				contadorRepeticaoCaracteres++; 
 				tamanhoMenosRepeticoes = tamanhoRealDaSenha-contadorRepeticaoCaracteres;
-				contadorRepeticoesIncremental = (tamanhoMenosRepeticoes > 0) ? Math.ceil(contadorRepeticoesIncremental/tamanhoMenosRepeticoes) : Math.ceil(contadorRepeticoesIncremental); 
+				contadorRepeticoesIncremental = (tamanhoMenosRepeticoes > 0) ? Math.ceil((double)contadorRepeticoesIncremental/tamanhoMenosRepeticoes) : Math.ceil(contadorRepeticoesIncremental); 
 			}
 		}
 
@@ -232,16 +232,18 @@ public class Validador {
 		
 		String complexidade = "Muito curta";
 		
-		if (nota >= 0 && nota < 20) 
-			complexidade = "Muito fraca";
-		else if (nota >= 20 && nota < 40) 
-			complexidade = "Fraca";
-		else if (nota >= 40 && nota < 60)
-			complexidade = "Boa";
-		else if (nota >= 60 && nota < 80) 
-			complexidade = "Forte";
-		else if (nota >= 80 && nota <= 100)
-			complexidade = "Muito forte";
+		if(tamanhoDaSenha > 0){
+			if (nota >= 0 && nota < 20) 
+				complexidade = "Muito fraca";
+			else if (nota >= 20 && nota < 40) 
+				complexidade = "Fraca";
+			else if (nota >= 40 && nota < 60)
+				complexidade = "Boa";
+			else if (nota >= 60 && nota < 80) 
+				complexidade = "Forte";
+			else if (nota >= 80 && nota <= 100)
+				complexidade = "Muito forte";
+		}
 		
 		resultado.setNota(nota);
 		resultado.setComplexidade(complexidade);
