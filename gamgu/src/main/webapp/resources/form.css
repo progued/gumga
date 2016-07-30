@@ -16,7 +16,7 @@ body{
 }
 
 #senha{
-	width: 50%;
+	width: 29%;
 }
 
 #interna{
@@ -61,6 +61,7 @@ body{
 	background-color: red; 
 	color: white;
 	font-size: small;
-	width: auto;
+	width: 20%;
+	text-align:center;
 	float:left;
 }

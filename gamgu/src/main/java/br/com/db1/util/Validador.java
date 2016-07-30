@@ -1,260 +1,252 @@
 package br.com.db1.util;
 
+import static br.com.db1.util.Constantes.ALFABETO;
+import static br.com.db1.util.Constantes.NUMEROS;
+import static br.com.db1.util.Constantes.PESO_LETRAS_MAIUSCULAS_CONSECUTIVAS;
+import static br.com.db1.util.Constantes.PESO_LETRAS_MINUSCULAS_CONSECUTIVAS;
+import static br.com.db1.util.Constantes.PESO_NUMEROS;
+import static br.com.db1.util.Constantes.PESO_NUMEROS_CONSECUTIVOS;
+import static br.com.db1.util.Constantes.PESO_NUMEROS_DO_MEIO_OU_SIMBOLOS;
 import static br.com.db1.util.Constantes.PESO_NUMERO_DE_CARACTERES;
+import static br.com.db1.util.Constantes.PESO_SIMBOLOS;
+import static br.com.db1.util.Constantes.PESO_TRES_OU_MAIS_LETRAS_SEQUENCIAIS;
+import static br.com.db1.util.Constantes.PESO_TRES_OU_MAIS_NUMEROS_SEQUENCIAIS;
+import static br.com.db1.util.Constantes.PESO_TRES_OU_MAIS_SIMBOLOS_SEQUENCIAIS;
+import static br.com.db1.util.Constantes.SIMBOLOS;
+import static br.com.db1.util.Constantes.TAMANHO_MINIMO_PARA_SENHA;
 import br.com.db1.bean.Resultado;
 
 public class Validador {
 
 	public static Resultado validaSenha(String senha){
 		
-		Integer nota = senha.length()*PESO_NUMERO_DE_CARACTERES;
+		int tamanhoDaSenha = senha.length();
+		int nota = tamanhoDaSenha*PESO_NUMERO_DE_CARACTERES;
 		
+		String senhaSemEspacosEmBranco = senha.trim().replace(" ", "");
+		int tamanhoRealDaSenha = senhaSemEspacosEmBranco.length();
+
+		int contadorLetrasMaiusculasConsecutivas = 0;
+		int contadorLetrasMinusculasConsecutivas = 0;
+		int contadorNumerosConsecutivos = 0;
+		int contadorLetrasMaiusculas = 0;
+		int contadorLetrasMinusculas = 0;
+		int contadorNumeros = 0;
+		int contadorSimbolos = 0;
+		int contadorRepeticaoCaracteres = 0;
+		int contadorSequenciaLetras = 0; 
+		int contadorSequenciaNumeros = 0; 
+		int contadorSequenciaSimbolos = 0; 
+		int contadorNumeroDoMeioSimbolo = 0;
+
+		int tamanhoMenosRepeticoes = 0;
+		Double contadorRepeticoesIncremental = 0.0; 
+
+		int posicaoUltimaLetrasMaiusculas = -1;
+		int posicaoUltimaLetrasMinusculas = -1;
+		int posicaoUltimoNumero = -1;
+				
+		String caracter = "";
+		String caracterAuxiliar = "";
+		
+		for (int i = 0; i < tamanhoRealDaSenha; i++) {
+			caracter = String.valueOf(senhaSemEspacosEmBranco.charAt(i));
+			if(caracter.matches("[A-Z]")){
+				if(posicaoUltimaLetrasMaiusculas != 0 && (posicaoUltimaLetrasMaiusculas + 1) == i)
+					contadorLetrasMaiusculasConsecutivas++;
+	
+				posicaoUltimaLetrasMaiusculas=i;
+				contadorLetrasMaiusculas++;
+			}else if(caracter.matches("[a-z]")){
+				if(posicaoUltimaLetrasMinusculas != 0 && (posicaoUltimaLetrasMinusculas + 1) == i)
+					contadorLetrasMinusculasConsecutivas++;
+	
+				posicaoUltimaLetrasMinusculas=i;
+				contadorLetrasMinusculas++;
+			}else if(caracter.matches("[0-9]")){
+				if (i > 0 && i < (tamanhoRealDaSenha - 1))  
+					contadorNumeroDoMeioSimbolo++; 
+				
+				if(posicaoUltimoNumero != 0 && (posicaoUltimoNumero + 1) == i)
+					contadorNumerosConsecutivos++;
+	
+				posicaoUltimoNumero = i;
+				contadorNumeros++;
+			}else if(caracter.matches("[^a-zA-Z0-9_]")){
+				if (i > 0 && i < (tamanhoRealDaSenha - 1))  
+					contadorNumeroDoMeioSimbolo++; 
+	
+				contadorSimbolos++;
+			}
+
+			boolean caracterJaExiste = false;
+			
+			for (int j = 0; j < tamanhoRealDaSenha; j++) {
+				caracterAuxiliar = String.valueOf(senhaSemEspacosEmBranco.charAt(j));
+				if(caracter.equals(caracterAuxiliar) && i != j){
+					caracterJaExiste = true;
+					contadorRepeticoesIncremental = Double.valueOf(Math.abs(tamanhoRealDaSenha/(j-i)));
+				}
+			}
+			if (caracterJaExiste) { 
+				contadorRepeticaoCaracteres++; 
+				tamanhoMenosRepeticoes = tamanhoRealDaSenha-contadorRepeticaoCaracteres;
+				contadorRepeticoesIncremental = (tamanhoMenosRepeticoes > 0) ? Math.ceil(contadorRepeticoesIncremental/tamanhoMenosRepeticoes) : Math.ceil(contadorRepeticoesIncremental); 
+			}
+		}
+
+		String sequenciaCorreta = "";
+		String sequenciaInvertida = "";
+		
+		for (int i=0; i < 23; i++) {
+			sequenciaCorreta = ALFABETO.substring(i,i+3);
+			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
+			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
+				contadorSequenciaLetras++; 
+			}
+		}
+		
+		for (int i=0; i < 8; i++) {
+			sequenciaCorreta = NUMEROS.substring(i,i+3);
+			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
+			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
+				contadorSequenciaNumeros++; 
+			}
+		}
+		
+		for (int i=0; i < 8; i++) {
+			sequenciaCorreta = SIMBOLOS.substring(i,i+3);
+			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
+			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
+				contadorSequenciaSimbolos++; 
+			}
+		}
+
 		Resultado resultado = new Resultado();
+		resultado.setPontuacaoNumeroDeCaracteres(nota);
+
+		if (contadorLetrasMaiusculas > 0 && contadorLetrasMaiusculas < tamanhoDaSenha) {	
+			nota = nota + ((tamanhoDaSenha - contadorLetrasMaiusculas) * 2);
+			resultado.setPontuacaoLetrasMaiusculas((tamanhoDaSenha - contadorLetrasMaiusculas) * 2); 
+		}
+		if (contadorLetrasMinusculas > 0 && contadorLetrasMinusculas < tamanhoDaSenha) {	
+			nota = nota + ((tamanhoDaSenha - contadorLetrasMinusculas) * 2); 
+			resultado.setPontuacaoLetrasMinusculas((tamanhoDaSenha - contadorLetrasMinusculas) * 2);
+		}
+		if (contadorNumeros > 0 && contadorNumeros < tamanhoDaSenha) {	
+			nota = nota + (contadorNumeros * PESO_NUMEROS);
+			resultado.setPontuacaoNumeros(contadorNumeros * PESO_NUMEROS);
+		}
+		if (contadorSimbolos > 0) {	
+			nota = nota + (contadorSimbolos * PESO_SIMBOLOS);
+			resultado.setPontuacaoSimbolos(contadorSimbolos * PESO_SIMBOLOS);
+		}
+		if (contadorNumeroDoMeioSimbolo > 0) {	
+			nota = nota + (contadorNumeroDoMeioSimbolo * PESO_NUMEROS_DO_MEIO_OU_SIMBOLOS);
+			resultado.setPontuacaoNumerosDoMeioOuSimbolos(contadorNumeroDoMeioSimbolo * PESO_NUMEROS_DO_MEIO_OU_SIMBOLOS);
+		}
+
+		if ((contadorLetrasMinusculas > 0 || contadorLetrasMaiusculas > 0) && contadorSimbolos == 0 && contadorNumeros == 0) {  
+			nota = nota - tamanhoDaSenha;
+			resultado.setApenasLetras(tamanhoDaSenha);
+			resultado.setPontuacaoApenasLetras(tamanhoDaSenha);
+		}
+		if (contadorLetrasMinusculas == 0 && contadorLetrasMaiusculas == 0 && contadorSimbolos == 0 && contadorNumeros > 0) {  
+			nota = nota - tamanhoDaSenha; 
+			resultado.setApenasNumeros(tamanhoDaSenha);
+			resultado.setPontuacaoApenasNumeros(tamanhoDaSenha);
+		}
+		if (contadorRepeticaoCaracteres > 0) {  
+			nota = nota - contadorRepeticoesIncremental.intValue();
+			resultado.setPontuacaoCaracteresRepetidos(contadorRepeticoesIncremental.intValue());
+		}
+		if (contadorLetrasMaiusculasConsecutivas > 0) { 
+			nota = nota - (contadorLetrasMaiusculasConsecutivas * PESO_LETRAS_MAIUSCULAS_CONSECUTIVAS); 
+			resultado.setPontuacaoLetrasMaiusculasConsecutivas(contadorLetrasMaiusculasConsecutivas * PESO_LETRAS_MAIUSCULAS_CONSECUTIVAS);
+		}
+		if (contadorLetrasMinusculasConsecutivas > 0) { 
+			nota = nota - (contadorLetrasMinusculasConsecutivas * PESO_LETRAS_MINUSCULAS_CONSECUTIVAS); 
+			resultado.setPontuacaoLetrasMinusculasConsecutivas(contadorLetrasMinusculasConsecutivas * PESO_LETRAS_MINUSCULAS_CONSECUTIVAS);
+		}
+		if (contadorNumerosConsecutivos > 0) { 
+			nota = nota - (contadorNumerosConsecutivos * PESO_NUMEROS_CONSECUTIVOS); 
+			resultado.setPontuacaoNumerosConsecutivos(contadorNumerosConsecutivos * PESO_NUMEROS_CONSECUTIVOS);
+		}
+		if (contadorSequenciaLetras > 0) { 
+			nota = nota - (contadorSequenciaLetras * PESO_TRES_OU_MAIS_LETRAS_SEQUENCIAIS); 
+			resultado.setPontuacaoTresOuMaisLetrasSequenciais(contadorSequenciaLetras * PESO_TRES_OU_MAIS_LETRAS_SEQUENCIAIS);
+		}
+		if (contadorSequenciaNumeros > 0) { 
+			nota = nota - (contadorSequenciaNumeros * PESO_TRES_OU_MAIS_NUMEROS_SEQUENCIAIS); 
+			resultado.setPontuacaoTresOuMaisNumerosSequenciais(contadorSequenciaNumeros * PESO_TRES_OU_MAIS_NUMEROS_SEQUENCIAIS);
+		}
+		if (contadorSequenciaSimbolos > 0) { 
+			nota = nota - (contadorSequenciaSimbolos * PESO_TRES_OU_MAIS_SIMBOLOS_SEQUENCIAIS); 
+			resultado.setPontuacaoTresOuMaisSimbolosSequenciais(contadorSequenciaLetras * PESO_TRES_OU_MAIS_SIMBOLOS_SEQUENCIAIS);
+		}
+
+		resultado.setNumeroDeCaracteres(tamanhoDaSenha);
+		resultado.setLetrasMaiusculas(contadorLetrasMaiusculas);
+		resultado.setLetrasMinusculas(contadorLetrasMinusculas);
+		resultado.setNumeros(contadorNumeros);
+		resultado.setSimbolos(contadorSimbolos);
+					
+		int contadorDeRequerimentos = 0;
+		
+		if(tamanhoDaSenha  >= TAMANHO_MINIMO_PARA_SENHA)
+			contadorDeRequerimentos++;
+		if(contadorLetrasMaiusculas  >= 1)
+			contadorDeRequerimentos++;
+		if(contadorLetrasMinusculas  >= 1)
+			contadorDeRequerimentos++;
+		if(contadorNumeros  >= 1)
+			contadorDeRequerimentos++;
+		if(contadorSimbolos  >= 1)
+			contadorDeRequerimentos++;
+		
+		int minimoCaracteresRequeridos = 0;
+		if (tamanhoRealDaSenha >= TAMANHO_MINIMO_PARA_SENHA)  
+			minimoCaracteresRequeridos = 3; 
+		else 
+			minimoCaracteresRequeridos = 4;
+		if (contadorDeRequerimentos > minimoCaracteresRequeridos) { 
+			nota = nota + (contadorDeRequerimentos * 2); 
+			resultado.setPontuacaoRequisitos(contadorDeRequerimentos * 2);
+		}
+
+		resultado.setNumerosDoMeioOuSimbolos(contadorNumeroDoMeioSimbolo);
+		resultado.setRequisitos(contadorDeRequerimentos);
+
+		resultado.setCaracteresRepetidos(contadorRepeticaoCaracteres);
+		resultado.setLetrasMaiusculasConsecutivas(contadorLetrasMaiusculasConsecutivas);
+		resultado.setLetrasMinusculasConsecutivas(contadorLetrasMinusculasConsecutivas);
+		resultado.setNumerosConsecutivos(contadorNumerosConsecutivos);
+		resultado.setTresOuMaisLetrasSequenciais(contadorSequenciaLetras);
+		resultado.setTresOuMaisNumerosSequenciais(contadorSequenciaNumeros);
+		resultado.setTresOuMaisSimbolosSequenciais(contadorSequenciaSimbolos);
+		
+		if (nota > 100) 
+			nota = 100;
+		else if (nota < 0) 
+			nota = 0; 
+		
+		String complexidade = "Muito curta";
+		
+		if (nota >= 0 && nota < 20) 
+			complexidade = "Muito fraca";
+		else if (nota >= 20 && nota < 40) 
+			complexidade = "Fraca";
+		else if (nota >= 40 && nota < 60)
+			complexidade = "Boa";
+		else if (nota >= 60 && nota < 80) 
+			complexidade = "Forte";
+		else if (nota >= 80 && nota <= 100)
+			complexidade = "Muito forte";
 		
 		resultado.setNota(nota);
-		resultado.setComplexidade("Muito curta");
-		
+		resultado.setComplexidade(complexidade);
+	
 		return resultado;
 	}
-	
-//	function chkPass(pwd) {
-//		var oScorebar = $("scorebar");
-//		var oScore = $("score");
-//		var oComplexity = $("complexity");
-//		// Simultaneous variable declaration and value assignment aren't supported in IE apparently
-//		// so I'm forced to assign the same value individually per var to support a crappy browser *sigh* 
-//		var nScore=0, nLength=0, nAlphaUC=0, nAlphaLC=0, nNumber=0, nSymbol=0, nMidChar=0, nRequirements=0, nAlphasOnly=0, nNumbersOnly=0, nUnqChar=0, nRepChar=0, nRepInc=0, nConsecAlphaUC=0, nConsecAlphaLC=0, nConsecNumber=0, nConsecSymbol=0, nConsecCharType=0, nSeqAlpha=0, nSeqNumber=0, nSeqSymbol=0, nSeqChar=0, nReqChar=0, nMultConsecCharType=0;
-//		var nMultRepChar=1, nMultConsecSymbol=1;
-//		var nMultMidChar=2, nMultRequirements=2, nMultConsecAlphaUC=2, nMultConsecAlphaLC=2, nMultConsecNumber=2;
-//		var nReqCharType=3, nMultAlphaUC=3, nMultAlphaLC=3, nMultSeqAlpha=3, nMultSeqNumber=3, nMultSeqSymbol=3;
-//		var nMultLength=4, nMultNumber=4;
-//		var nMultSymbol=6;
-//		var nTmpAlphaUC="", nTmpAlphaLC="", nTmpNumber="", nTmpSymbol="";
-//		var sAlphaUC="0", sAlphaLC="0", sNumber="0", sSymbol="0", sMidChar="0", sRequirements="0", sAlphasOnly="0", sNumbersOnly="0", sRepChar="0", sConsecAlphaUC="0", sConsecAlphaLC="0", sConsecNumber="0", sSeqAlpha="0", sSeqNumber="0", sSeqSymbol="0";
-//		var sAlphas = "abcdefghijklmnopqrstuvwxyz";
-//		var sNumerics = "01234567890";
-//		var sSymbols = ")!@#$%^&*()";
-//		var sComplexity = "Too Short";
-//		var sStandards = "Below";
-//		var nMinPwdLen = 8;
-//		if (document.all) { var nd = 0; } else { var nd = 1; }
-//		if (pwd) {
-//			nScore = parseInt(pwd.length * nMultLength);
-//			nLength = pwd.length;
-//			var arrPwd = pwd.replace(/\s+/g,"").split(/\s*/);
-//			var arrPwdLen = arrPwd.length;
-//			
-//			/* Loop through password to check for Symbol, Numeric, Lowercase and Uppercase pattern matches */
-//			for (var a=0; a < arrPwdLen; a++) {
-//				if (arrPwd[a].match(/[A-Z]/g)) {
-//					if (nTmpAlphaUC !== "") { if ((nTmpAlphaUC + 1) == a) { nConsecAlphaUC++; nConsecCharType++; } }
-//					nTmpAlphaUC = a;
-//					nAlphaUC++;
-//				}
-//				else if (arrPwd[a].match(/[a-z]/g)) { 
-//					if (nTmpAlphaLC !== "") { if ((nTmpAlphaLC + 1) == a) { nConsecAlphaLC++; nConsecCharType++; } }
-//					nTmpAlphaLC = a;
-//					nAlphaLC++;
-//				}
-//				else if (arrPwd[a].match(/[0-9]/g)) { 
-//					if (a > 0 && a < (arrPwdLen - 1)) { nMidChar++; }
-//					if (nTmpNumber !== "") { if ((nTmpNumber + 1) == a) { nConsecNumber++; nConsecCharType++; } }
-//					nTmpNumber = a;
-//					nNumber++;
-//				}
-//				else if (arrPwd[a].match(/[^a-zA-Z0-9_]/g)) { 
-//					if (a > 0 && a < (arrPwdLen - 1)) { nMidChar++; }
-//					if (nTmpSymbol !== "") { if ((nTmpSymbol + 1) == a) { nConsecSymbol++; nConsecCharType++; } }
-//					nTmpSymbol = a;
-//					nSymbol++;
-//				}
-//				/* Internal loop through password to check for repeat characters */
-//				var bCharExists = false;
-//				for (var b=0; b < arrPwdLen; b++) {
-//					if (arrPwd[a] == arrPwd[b] && a != b) { /* repeat character exists */
-//						bCharExists = true;
-//						/* 
-//						Calculate icrement deduction based on proximity to identical characters
-//						Deduction is incremented each time a new match is discovered
-//						Deduction amount is based on total password length divided by the
-//						difference of distance between currently selected match
-//						*/
-//						nRepInc += Math.abs(arrPwdLen/(b-a));
-//					}
-//				}
-//				if (bCharExists) { 
-//					nRepChar++; 
-//					nUnqChar = arrPwdLen-nRepChar;
-//					nRepInc = (nUnqChar) ? Math.ceil(nRepInc/nUnqChar) : Math.ceil(nRepInc); 
-//				}
-//			}
-//			
-//			/* Check for sequential alpha string patterns (forward and reverse) */
-//			for (var s=0; s < 23; s++) {
-//				var sFwd = sAlphas.substring(s,parseInt(s+3));
-//				var sRev = sFwd.strReverse();
-//				if (pwd.toLowerCase().indexOf(sFwd) != -1 || pwd.toLowerCase().indexOf(sRev) != -1) { nSeqAlpha++; nSeqChar++;}
-//			}
-//			
-//			/* Check for sequential numeric string patterns (forward and reverse) */
-//			for (var s=0; s < 8; s++) {
-//				var sFwd = sNumerics.substring(s,parseInt(s+3));
-//				var sRev = sFwd.strReverse();
-//				if (pwd.toLowerCase().indexOf(sFwd) != -1 || pwd.toLowerCase().indexOf(sRev) != -1) { nSeqNumber++; nSeqChar++;}
-//			}
-//			
-//			/* Check for sequential symbol string patterns (forward and reverse) */
-//			for (var s=0; s < 8; s++) {
-//				var sFwd = sSymbols.substring(s,parseInt(s+3));
-//				var sRev = sFwd.strReverse();
-//				if (pwd.toLowerCase().indexOf(sFwd) != -1 || pwd.toLowerCase().indexOf(sRev) != -1) { nSeqSymbol++; nSeqChar++;}
-//			}
-//			
-//		/* Modify overall score value based on usage vs requirements */
-//
-//			/* General point assignment */
-//			$("nLengthBonus").innerHTML = "+ " + nScore; 
-//			if (nAlphaUC > 0 && nAlphaUC < nLength) {	
-//				nScore = parseInt(nScore + ((nLength - nAlphaUC) * 2));
-//				sAlphaUC = "+ " + parseInt((nLength - nAlphaUC) * 2); 
-//			}
-//			if (nAlphaLC > 0 && nAlphaLC < nLength) {	
-//				nScore = parseInt(nScore + ((nLength - nAlphaLC) * 2)); 
-//				sAlphaLC = "+ " + parseInt((nLength - nAlphaLC) * 2);
-//			}
-//			if (nNumber > 0 && nNumber < nLength) {	
-//				nScore = parseInt(nScore + (nNumber * nMultNumber));
-//				sNumber = "+ " + parseInt(nNumber * nMultNumber);
-//			}
-//			if (nSymbol > 0) {	
-//				nScore = parseInt(nScore + (nSymbol * nMultSymbol));
-//				sSymbol = "+ " + parseInt(nSymbol * nMultSymbol);
-//			}
-//			if (nMidChar > 0) {	
-//				nScore = parseInt(nScore + (nMidChar * nMultMidChar));
-//				sMidChar = "+ " + parseInt(nMidChar * nMultMidChar);
-//			}
-//			$("nAlphaUCBonus").innerHTML = sAlphaUC; 
-//			$("nAlphaLCBonus").innerHTML = sAlphaLC;
-//			$("nNumberBonus").innerHTML = sNumber;
-//			$("nSymbolBonus").innerHTML = sSymbol;
-//			$("nMidCharBonus").innerHTML = sMidChar;
-//			
-//			/* Point deductions for poor practices */
-//			if ((nAlphaLC > 0 || nAlphaUC > 0) && nSymbol === 0 && nNumber === 0) {  // Only Letters
-//				nScore = parseInt(nScore - nLength);
-//				nAlphasOnly = nLength;
-//				sAlphasOnly = "- " + nLength;
-//			}
-//			if (nAlphaLC === 0 && nAlphaUC === 0 && nSymbol === 0 && nNumber > 0) {  // Only Numbers
-//				nScore = parseInt(nScore - nLength); 
-//				nNumbersOnly = nLength;
-//				sNumbersOnly = "- " + nLength;
-//			}
-//			if (nRepChar > 0) {  // Same character exists more than once
-//				nScore = parseInt(nScore - nRepInc);
-//				sRepChar = "- " + nRepInc;
-//			}
-//			if (nConsecAlphaUC > 0) {  // Consecutive Uppercase Letters exist
-//				nScore = parseInt(nScore - (nConsecAlphaUC * nMultConsecAlphaUC)); 
-//				sConsecAlphaUC = "- " + parseInt(nConsecAlphaUC * nMultConsecAlphaUC);
-//			}
-//			if (nConsecAlphaLC > 0) {  // Consecutive Lowercase Letters exist
-//				nScore = parseInt(nScore - (nConsecAlphaLC * nMultConsecAlphaLC)); 
-//				sConsecAlphaLC = "- " + parseInt(nConsecAlphaLC * nMultConsecAlphaLC);
-//			}
-//			if (nConsecNumber > 0) {  // Consecutive Numbers exist
-//				nScore = parseInt(nScore - (nConsecNumber * nMultConsecNumber));  
-//				sConsecNumber = "- " + parseInt(nConsecNumber * nMultConsecNumber);
-//			}
-//			if (nSeqAlpha > 0) {  // Sequential alpha strings exist (3 characters or more)
-//				nScore = parseInt(nScore - (nSeqAlpha * nMultSeqAlpha)); 
-//				sSeqAlpha = "- " + parseInt(nSeqAlpha * nMultSeqAlpha);
-//			}
-//			if (nSeqNumber > 0) {  // Sequential numeric strings exist (3 characters or more)
-//				nScore = parseInt(nScore - (nSeqNumber * nMultSeqNumber)); 
-//				sSeqNumber = "- " + parseInt(nSeqNumber * nMultSeqNumber);
-//			}
-//			if (nSeqSymbol > 0) {  // Sequential symbol strings exist (3 characters or more)
-//				nScore = parseInt(nScore - (nSeqSymbol * nMultSeqSymbol)); 
-//				sSeqSymbol = "- " + parseInt(nSeqSymbol * nMultSeqSymbol);
-//			}
-//			$("nAlphasOnlyBonus").innerHTML = sAlphasOnly; 
-//			$("nNumbersOnlyBonus").innerHTML = sNumbersOnly; 
-//			$("nRepCharBonus").innerHTML = sRepChar; 
-//			$("nConsecAlphaUCBonus").innerHTML = sConsecAlphaUC; 
-//			$("nConsecAlphaLCBonus").innerHTML = sConsecAlphaLC; 
-//			$("nConsecNumberBonus").innerHTML = sConsecNumber;
-//			$("nSeqAlphaBonus").innerHTML = sSeqAlpha; 
-//			$("nSeqNumberBonus").innerHTML = sSeqNumber; 
-//			$("nSeqSymbolBonus").innerHTML = sSeqSymbol; 
-//
-//			/* Determine if mandatory requirements have been met and set image indicators accordingly */
-//			var arrChars = [nLength,nAlphaUC,nAlphaLC,nNumber,nSymbol];
-//			var arrCharsIds = ["nLength","nAlphaUC","nAlphaLC","nNumber","nSymbol"];
-//			var arrCharsLen = arrChars.length;
-//			for (var c=0; c < arrCharsLen; c++) {
-//				var oImg = $('div_' + arrCharsIds[c]);
-//				var oBonus = $(arrCharsIds[c] + 'Bonus');
-//				$(arrCharsIds[c]).innerHTML = arrChars[c];
-//				if (arrCharsIds[c] == "nLength") { var minVal = parseInt(nMinPwdLen - 1); } else { var minVal = 0; }
-//				if (arrChars[c] == parseInt(minVal + 1)) { nReqChar++; oImg.className = "pass"; oBonus.parentNode.className = "pass"; }
-//				else if (arrChars[c] > parseInt(minVal + 1)) { nReqChar++; oImg.className = "exceed"; oBonus.parentNode.className = "exceed"; }
-//				else { oImg.className = "fail"; oBonus.parentNode.className = "fail"; }
-//			}
-//			nRequirements = nReqChar;
-//			if (pwd.length >= nMinPwdLen) { var nMinReqChars = 3; } else { var nMinReqChars = 4; }
-//			if (nRequirements > nMinReqChars) {  // One or more required characters exist
-//				nScore = parseInt(nScore + (nRequirements * 2)); 
-//				sRequirements = "+ " + parseInt(nRequirements * 2);
-//			}
-//			$("nRequirementsBonus").innerHTML = sRequirements;
-//
-//			/* Determine if additional bonuses need to be applied and set image indicators accordingly */
-//			var arrChars = [nMidChar,nRequirements];
-//			var arrCharsIds = ["nMidChar","nRequirements"];
-//			var arrCharsLen = arrChars.length;
-//			for (var c=0; c < arrCharsLen; c++) {
-//				var oImg = $('div_' + arrCharsIds[c]);
-//				var oBonus = $(arrCharsIds[c] + 'Bonus');
-//				$(arrCharsIds[c]).innerHTML = arrChars[c];
-//				if (arrCharsIds[c] == "nRequirements") { var minVal = nMinReqChars; } else { var minVal = 0; }
-//				if (arrChars[c] == parseInt(minVal + 1)) { oImg.className = "pass"; oBonus.parentNode.className = "pass"; }
-//				else if (arrChars[c] > parseInt(minVal + 1)) { oImg.className = "exceed"; oBonus.parentNode.className = "exceed"; }
-//				else { oImg.className = "fail"; oBonus.parentNode.className = "fail"; }
-//			}
-//
-//			/* Determine if suggested requirements have been met and set image indicators accordingly */
-//			var arrChars = [nAlphasOnly,nNumbersOnly,nRepChar,nConsecAlphaUC,nConsecAlphaLC,nConsecNumber,nSeqAlpha,nSeqNumber,nSeqSymbol];
-//			var arrCharsIds = ["nAlphasOnly","nNumbersOnly","nRepChar","nConsecAlphaUC","nConsecAlphaLC","nConsecNumber","nSeqAlpha","nSeqNumber","nSeqSymbol"];
-//			var arrCharsLen = arrChars.length;
-//			for (var c=0; c < arrCharsLen; c++) {
-//				var oImg = $('div_' + arrCharsIds[c]);
-//				var oBonus = $(arrCharsIds[c] + 'Bonus');
-//				$(arrCharsIds[c]).innerHTML = arrChars[c];
-//				if (arrChars[c] > 0) { oImg.className = "warn"; oBonus.parentNode.className = "warn"; }
-//				else { oImg.className = "pass"; oBonus.parentNode.className = "pass"; }
-//			}
-//			
-//			/* Determine complexity based on overall score */
-//			if (nScore > 100) { nScore = 100; } else if (nScore < 0) { nScore = 0; }
-//			if (nScore >= 0 && nScore < 20) { sComplexity = "Very Weak"; }
-//			else if (nScore >= 20 && nScore < 40) { sComplexity = "Weak"; }
-//			else if (nScore >= 40 && nScore < 60) { sComplexity = "Good"; }
-//			else if (nScore >= 60 && nScore < 80) { sComplexity = "Strong"; }
-//			else if (nScore >= 80 && nScore <= 100) { sComplexity = "Very Strong"; }
-//			
-//			/* Display updated score criteria to client */
-//			oScorebar.style.backgroundPosition = "-" + parseInt(nScore * 4) + "px";
-//			oScore.innerHTML = nScore + "%";
-//			oComplexity.innerHTML = sComplexity;
-//		}
-//		else {
-//			/* Display default score criteria to client */
-//			initPwdChk();
-//			oScore.innerHTML = nScore + "%";
-//			oComplexity.innerHTML = sComplexity;
-//		}
-//	}
 	
 }

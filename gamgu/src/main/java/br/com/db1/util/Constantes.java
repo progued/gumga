@@ -17,4 +17,10 @@ public class Constantes {
 	public static final Integer PESO_TRES_OU_MAIS_NUMEROS_SEQUENCIAIS = 3;
 	public static final Integer PESO_TRES_OU_MAIS_SIMBOLOS_SEQUENCIAIS = 3;
 	
+	public static final Integer TAMANHO_MINIMO_PARA_SENHA = 8;
+	public static final String ALFABETO = "abcdefghijklmnopqrstuvwxyz";
+	public static final String SIMBOLOS = ")!@#$%^&*()";
+	public static final String NUMEROS = "01234567890";
+
+	
 }
