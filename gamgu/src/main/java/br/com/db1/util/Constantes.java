@@ -17,6 +17,13 @@ public class Constantes {
 	public static final Integer PESO_TRES_OU_MAIS_NUMEROS_SEQUENCIAIS = 3;
 	public static final Integer PESO_TRES_OU_MAIS_SIMBOLOS_SEQUENCIAIS = 3;
 	
+	public static final String COMPLEXIDADE_MUITO_CURTA = "Muito curta";
+	public static final String COMPLEXIDADE_MUITO_FORTE = "Muito forte";
+	public static final String COMPLEXIDADE_FORTE = "Forte";
+	public static final String COMPLEXIDADE_BOA = "Boa";
+	public static final String COMPLEXIDADE_FRACA = "Fraca";
+	public static final String COMPLEXIDADE_MUITO_FRACA = "Muito fraca";	
+	
 	public static final Integer TAMANHO_MINIMO_PARA_SENHA = 8;
 	public static final String ALFABETO = "abcdefghijklmnopqrstuvwxyz";
 	public static final String SIMBOLOS = ")!@#$%^&*()";

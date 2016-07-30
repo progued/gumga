@@ -14,115 +14,100 @@ import static br.com.db1.util.Constantes.PESO_TRES_OU_MAIS_NUMEROS_SEQUENCIAIS;
 import static br.com.db1.util.Constantes.PESO_TRES_OU_MAIS_SIMBOLOS_SEQUENCIAIS;
 import static br.com.db1.util.Constantes.SIMBOLOS;
 import static br.com.db1.util.Constantes.TAMANHO_MINIMO_PARA_SENHA;
+import static br.com.db1.util.Constantes.COMPLEXIDADE_MUITO_CURTA;
+import static br.com.db1.util.Constantes.COMPLEXIDADE_MUITO_FORTE;
+import static br.com.db1.util.Constantes.COMPLEXIDADE_FORTE;
+import static br.com.db1.util.Constantes.COMPLEXIDADE_BOA;
+import static br.com.db1.util.Constantes.COMPLEXIDADE_FRACA;
+import static br.com.db1.util.Constantes.COMPLEXIDADE_MUITO_FRACA;
 import br.com.db1.bean.Resultado;
 
 public class Validador {
 
-	public static Resultado validaSenha(String senha){
+	Resultado resultado;
+	int nota;
+	int tamanhoDaSenha;
+	int tamanhoRealDaSenha;
+	int contadorLetrasMaiusculasConsecutivas;
+	int contadorLetrasMinusculasConsecutivas;
+	int contadorNumerosConsecutivos;
+	int contadorLetrasMaiusculas;
+	int contadorLetrasMinusculas;
+	int contadorNumeros;
+	int contadorSimbolos;
+	int contadorRepeticaoCaracteres;
+	int contadorSequenciaLetras; 
+	int contadorSequenciaNumeros; 
+	int contadorSequenciaSimbolos; 
+	int contadorNumeroDoMeioSimbolo;
+	String senhaSemEspacosEmBranco;
+	String sequenciaCorreta;
+	String sequenciaInvertida;
+	Double contadorRepeticoesIncremental = 0.0; 
+	String complexidade;
+
+	public Resultado validaSenha(String senha){
 		
-		int tamanhoDaSenha = senha.length();
-		int nota = tamanhoDaSenha*PESO_NUMERO_DE_CARACTERES;
+		inicializaVariaveis(senha);
+
+		verificaExistenciaDeLetrasNumerosSimbolos();
+
+		verificaExistenciaDeSequencias(senha);
+
+		alimentaResultado();
 		
-		String senhaSemEspacosEmBranco = senha.trim().replace(" ", "");
-		int tamanhoRealDaSenha = senhaSemEspacosEmBranco.length();
-
-		int contadorLetrasMaiusculasConsecutivas = 0;
-		int contadorLetrasMinusculasConsecutivas = 0;
-		int contadorNumerosConsecutivos = 0;
-		int contadorLetrasMaiusculas = 0;
-		int contadorLetrasMinusculas = 0;
-		int contadorNumeros = 0;
-		int contadorSimbolos = 0;
-		int contadorRepeticaoCaracteres = 0;
-		int contadorSequenciaLetras = 0; 
-		int contadorSequenciaNumeros = 0; 
-		int contadorSequenciaSimbolos = 0; 
-		int contadorNumeroDoMeioSimbolo = 0;
-
-		int tamanhoMenosRepeticoes = 0;
-		Double contadorRepeticoesIncremental = 0.0; 
-
-		int posicaoUltimaLetrasMaiusculas = -1;
-		int posicaoUltimaLetrasMinusculas = -1;
-		int posicaoUltimoNumero = -1;
-				
-		String caracter = "";
-		String caracterAuxiliar = "";
-
-		for (int i = 0; i < tamanhoRealDaSenha; i++) {
-			caracter = String.valueOf(senhaSemEspacosEmBranco.charAt(i));
-			if(caracter.matches("[A-Z]")){
-				if(posicaoUltimaLetrasMaiusculas >= 0 && (posicaoUltimaLetrasMaiusculas + 1) == i)
-					contadorLetrasMaiusculasConsecutivas++;
+		garanteNotaPertenceAoIntervaloValido(); 
+		
+		verificaComplexidade();
+		
+		alimentaNotaEComplexidadeNoResultado();
 	
-				posicaoUltimaLetrasMaiusculas=i;
-				contadorLetrasMaiusculas++;
-			}else if(caracter.matches("[a-z]")){
-				if(posicaoUltimaLetrasMinusculas >= 0 && (posicaoUltimaLetrasMinusculas + 1) == i)
-					contadorLetrasMinusculasConsecutivas++;
-	
-				posicaoUltimaLetrasMinusculas=i;
-				contadorLetrasMinusculas++;
-			}else if(caracter.matches("[0-9]")){
-				if (i > 0 && i < (tamanhoRealDaSenha - 1))  
-					contadorNumeroDoMeioSimbolo++; 
-				
-				if(posicaoUltimoNumero >= 0 && (posicaoUltimoNumero + 1) == i)
-					contadorNumerosConsecutivos++;
-	
-				posicaoUltimoNumero = i;
-				contadorNumeros++;
-			}else if(caracter.matches("[^a-zA-Z0-9_]")){
-				if (i > 0 && i < (tamanhoRealDaSenha - 1))  
-					contadorNumeroDoMeioSimbolo++; 
-	
-				contadorSimbolos++;
-			}
+		return resultado;
+	}
 
-			boolean caracterJaExiste = false;
-			
-			for (int j = 0; j < tamanhoRealDaSenha; j++) {
-				caracterAuxiliar = String.valueOf(senhaSemEspacosEmBranco.charAt(j));
-				if(caracter.equals(caracterAuxiliar) && i != j){
-					caracterJaExiste = true;
-					contadorRepeticoesIncremental += Math.abs((double)tamanhoRealDaSenha/(j-i));
-				}
-			}
-			if (caracterJaExiste) { 
-				contadorRepeticaoCaracteres++; 
-				tamanhoMenosRepeticoes = tamanhoRealDaSenha-contadorRepeticaoCaracteres;
-				contadorRepeticoesIncremental = (tamanhoMenosRepeticoes > 0) ? Math.ceil((double)contadorRepeticoesIncremental/tamanhoMenosRepeticoes) : Math.ceil(contadorRepeticoesIncremental); 
-			}
-		}
+	private void alimentaResultado() {
+		alimentaPontuacoesNoResultado();
 
-		String sequenciaCorreta = "";
-		String sequenciaInvertida = "";
-		
-		for (int i=0; i < 23; i++) {
-			sequenciaCorreta = ALFABETO.substring(i,i+3);
-			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
-			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
-				contadorSequenciaLetras++; 
-			}
-		}
-		
-		for (int i=0; i < 8; i++) {
-			sequenciaCorreta = NUMEROS.substring(i,i+3);
-			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
-			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
-				contadorSequenciaNumeros++; 
-			}
-		}
-		
-		for (int i=0; i < 8; i++) {
-			sequenciaCorreta = SIMBOLOS.substring(i,i+3);
-			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
-			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
-				contadorSequenciaSimbolos++; 
-			}
-		}
+		alimentaContadoresNoResultado();
+	}
 
-		Resultado resultado = new Resultado();
+	private void verificaExistenciaDeSequencias(String senha) {
+		verificaExistenciaDeLetrasSequenciais(senha);
+		
+		verificaExistenciaDeNumerosSequenciais(senha);
+		
+		verificaExistenciaDeSimbolosSequencias(senha);
+	}
+
+	private void alimentaNotaEComplexidadeNoResultado() {
+		resultado.setNota(nota);
+		resultado.setComplexidade(complexidade);
+	}
+
+	private void verificaComplexidade() {
+		if(tamanhoDaSenha <= 0)
+			return;
+
+		if (nota >= 0 && nota < 20) 
+			complexidade = COMPLEXIDADE_MUITO_FRACA;
+		else if (nota >= 20 && nota < 40) 
+			complexidade = COMPLEXIDADE_FRACA;
+		else if (nota >= 40 && nota < 60)
+			complexidade = COMPLEXIDADE_BOA;
+		else if (nota >= 60 && nota < 80) 
+			complexidade = COMPLEXIDADE_FORTE;
+		else if (nota >= 80 && nota <= 100)
+			complexidade = COMPLEXIDADE_MUITO_FORTE;
+	}
+
+	private void garanteNotaPertenceAoIntervaloValido() {
+		if (nota > 100) 
+			nota = 100;
+		else if (nota < 0) 
+			nota = 0;
+	}
+
+	private void alimentaPontuacoesNoResultado() {
 		resultado.setPontuacaoNumeroDeCaracteres(nota);
 
 		if (contadorLetrasMaiusculas > 0 && contadorLetrasMaiusculas < tamanhoDaSenha) {	
@@ -184,7 +169,9 @@ public class Validador {
 			nota = nota - (contadorSequenciaSimbolos * PESO_TRES_OU_MAIS_SIMBOLOS_SEQUENCIAIS); 
 			resultado.setPontuacaoTresOuMaisSimbolosSequenciais(contadorSequenciaLetras * PESO_TRES_OU_MAIS_SIMBOLOS_SEQUENCIAIS);
 		}
+	}
 
+	private void alimentaContadoresNoResultado() {
 		resultado.setNumeroDeCaracteres(tamanhoDaSenha);
 		resultado.setLetrasMaiusculas(contadorLetrasMaiusculas);
 		resultado.setLetrasMinusculas(contadorLetrasMinusculas);
@@ -224,31 +211,128 @@ public class Validador {
 		resultado.setTresOuMaisLetrasSequenciais(contadorSequenciaLetras);
 		resultado.setTresOuMaisNumerosSequenciais(contadorSequenciaNumeros);
 		resultado.setTresOuMaisSimbolosSequenciais(contadorSequenciaSimbolos);
-		
-		if (nota > 100) 
-			nota = 100;
-		else if (nota < 0) 
-			nota = 0; 
-		
-		String complexidade = "Muito curta";
-		
-		if(tamanhoDaSenha > 0){
-			if (nota >= 0 && nota < 20) 
-				complexidade = "Muito fraca";
-			else if (nota >= 20 && nota < 40) 
-				complexidade = "Fraca";
-			else if (nota >= 40 && nota < 60)
-				complexidade = "Boa";
-			else if (nota >= 60 && nota < 80) 
-				complexidade = "Forte";
-			else if (nota >= 80 && nota <= 100)
-				complexidade = "Muito forte";
+	}
+
+	private void verificaExistenciaDeSimbolosSequencias(String senha) {
+		for (int i=0; i < 8; i++) {
+			sequenciaCorreta = SIMBOLOS.substring(i,i+3);
+			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
+			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
+				contadorSequenciaSimbolos++; 
+			}
 		}
-		
-		resultado.setNota(nota);
-		resultado.setComplexidade(complexidade);
+	}
+
+	private void verificaExistenciaDeNumerosSequenciais(String senha) {
+		for (int i=0; i < 8; i++) {
+			sequenciaCorreta = NUMEROS.substring(i,i+3);
+			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
+			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
+				contadorSequenciaNumeros++; 
+			}
+		}
+	}
+
+	private void verificaExistenciaDeLetrasSequenciais(String senha) {
+		for (int i=0; i < 23; i++) {
+			sequenciaCorreta = ALFABETO.substring(i,i+3);
+			sequenciaInvertida = new StringBuffer(sequenciaCorreta).reverse().toString();
+			if (senha.toLowerCase().indexOf(sequenciaCorreta) != -1 || senha.toLowerCase().indexOf(sequenciaInvertida) != -1) { 
+				contadorSequenciaLetras++; 
+			}
+		}
+	}
+
+	private void verificaExistenciaDeLetrasNumerosSimbolos() {
+		int posicaoUltimaLetrasMaiusculas = -1;
+		int posicaoUltimaLetrasMinusculas = -1;
+		int posicaoUltimoNumero = -1;
+				
+		String caracter = "";
+
+		for (int posicao = 0; posicao < tamanhoRealDaSenha; posicao++) {
+			caracter = String.valueOf(senhaSemEspacosEmBranco.charAt(posicao));
+			if(caracter.matches("[A-Z]")){
+				if(posicaoUltimaLetrasMaiusculas >= 0 && (posicaoUltimaLetrasMaiusculas + 1) == posicao)
+					contadorLetrasMaiusculasConsecutivas++;
 	
-		return resultado;
+				posicaoUltimaLetrasMaiusculas=posicao;
+				contadorLetrasMaiusculas++;
+			}else if(caracter.matches("[a-z]")){
+				if(posicaoUltimaLetrasMinusculas >= 0 && (posicaoUltimaLetrasMinusculas + 1) == posicao)
+					contadorLetrasMinusculasConsecutivas++;
+	
+				posicaoUltimaLetrasMinusculas=posicao;
+				contadorLetrasMinusculas++;
+			}else if(caracter.matches("[0-9]")){
+				if (posicao > 0 && posicao < (tamanhoRealDaSenha - 1))  
+					contadorNumeroDoMeioSimbolo++; 
+				
+				if(posicaoUltimoNumero >= 0 && (posicaoUltimoNumero + 1) == posicao)
+					contadorNumerosConsecutivos++;
+	
+				posicaoUltimoNumero = posicao;
+				contadorNumeros++;
+			}else if(caracter.matches("[^a-zA-Z0-9_]")){
+				if (posicao > 0 && posicao < (tamanhoRealDaSenha - 1))  
+					contadorNumeroDoMeioSimbolo++; 
+	
+				contadorSimbolos++;
+			}
+
+			verificaRepeticaoDeCaracteres(caracter, posicao);
+		}
+	}
+
+	private void verificaRepeticaoDeCaracteres(String caracter, int posicao) {
+		int tamanhoMenosRepeticoes = 0;
+		boolean caracterJaExiste = false;
+		caracterJaExiste = verificaSeCaracterJaExiste(caracter, posicao);
+		if (caracterJaExiste) { 
+			contadorRepeticaoCaracteres++; 
+			tamanhoMenosRepeticoes = tamanhoRealDaSenha-contadorRepeticaoCaracteres;
+			contadorRepeticoesIncremental = (tamanhoMenosRepeticoes > 0) ? Math.ceil((double)contadorRepeticoesIncremental/tamanhoMenosRepeticoes) : Math.ceil(contadorRepeticoesIncremental); 
+		}
+	}
+
+	private boolean verificaSeCaracterJaExiste(String caracter, int posicao) {
+		String caracterAuxiliar = "";
+		boolean caracterJaExiste = false;
+		for (int posicaoCaracterAuxiliar = 0; posicaoCaracterAuxiliar < tamanhoRealDaSenha; posicaoCaracterAuxiliar++) {
+			caracterAuxiliar = String.valueOf(senhaSemEspacosEmBranco.charAt(posicaoCaracterAuxiliar));
+			if(caracter.equals(caracterAuxiliar) && posicao != posicaoCaracterAuxiliar){
+				caracterJaExiste = true;
+				contadorRepeticoesIncremental += Math.abs((double)tamanhoRealDaSenha/(posicaoCaracterAuxiliar-posicao));
+			}
+		}
+		return caracterJaExiste;
+	}
+
+	private void inicializaVariaveis(String senha) {
+		resultado = new Resultado();
+
+		tamanhoDaSenha = senha.length();
+		nota = tamanhoDaSenha*PESO_NUMERO_DE_CARACTERES;
+		
+		senhaSemEspacosEmBranco = senha.trim().replace(" ", "");
+		tamanhoRealDaSenha = senhaSemEspacosEmBranco.length();
+
+		contadorLetrasMaiusculasConsecutivas = 0;
+		contadorLetrasMinusculasConsecutivas = 0;
+		contadorNumerosConsecutivos = 0;
+		contadorLetrasMaiusculas = 0;
+		contadorLetrasMinusculas = 0;
+		contadorNumeros = 0;
+		contadorSimbolos = 0;
+		contadorRepeticaoCaracteres = 0;
+		contadorSequenciaLetras = 0; 
+		contadorSequenciaNumeros = 0; 
+		contadorSequenciaSimbolos = 0; 
+		contadorNumeroDoMeioSimbolo = 0;
+		contadorRepeticoesIncremental = 0.0;
+		sequenciaCorreta = "";
+		sequenciaInvertida = "";
+		complexidade = COMPLEXIDADE_MUITO_CURTA;
 	}
 	
 }

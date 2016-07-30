@@ -6,252 +6,250 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class Resultado {
 
 	private String complexidade;
-	private Integer nota;
+	private int nota;
 	
-	private Integer numeroDeCaracteres;
-	private Integer letrasMaiusculas;
-	private Integer letrasMinusculas;
-	private Integer numeros;
-	private Integer simbolos;
-	private Integer numerosDoMeioOuSimbolos;
-	private Integer requisitos;
-	private Integer apenasLetras;
-	private Integer apenasNumeros;
-	private Integer caracteresRepetidos;
-	private Integer letrasMaiusculasConsecutivas;
-	private Integer letrasMinusculasConsecutivas;
-	private Integer numerosConsecutivos;
-	private Integer tresOuMaisLetrasSequenciais;
-	private Integer tresOuMaisNumerosSequenciais;
-	private Integer tresOuMaisSimbolosSequenciais;
+	private int numeroDeCaracteres;
+	private int letrasMaiusculas;
+	private int letrasMinusculas;
+	private int numeros;
+	private int simbolos;
+	private int numerosDoMeioOuSimbolos;
+	private int requisitos;
+	private int apenasLetras;
+	private int apenasNumeros;
+	private int caracteresRepetidos;
+	private int letrasMaiusculasConsecutivas;
+	private int letrasMinusculasConsecutivas;
+	private int numerosConsecutivos;
+	private int tresOuMaisLetrasSequenciais;
+	private int tresOuMaisNumerosSequenciais;
+	private int tresOuMaisSimbolosSequenciais;
 
-	private Integer pontuacaoNumeroDeCaracteres;
-	private Integer pontuacaoLetrasMaiusculas;
-	private Integer pontuacaoLetrasMinusculas;
-	private Integer pontuacaoNumeros;
-	private Integer pontuacaoSimbolos;
-	private Integer pontuacaoNumerosDoMeioOuSimbolos;
-	private Integer pontuacaoRequisitos;
-	private Integer pontuacaoApenasLetras;
-	private Integer pontuacaoApenasNumeros;
-	private Integer pontuacaoCaracteresRepetidos;
-	private Integer pontuacaoLetrasMaiusculasConsecutivas;
-	private Integer pontuacaoLetrasMinusculasConsecutivas;
-	private Integer pontuacaoNumerosConsecutivos;
-	private Integer pontuacaoTresOuMaisLetrasSequenciais;
-	private Integer pontuacaoTresOuMaisNumerosSequenciais;
-	private Integer pontuacaoTresOuMaisSimbolosSequenciais;
-	
+	private int pontuacaoNumeroDeCaracteres;
+	private int pontuacaoLetrasMaiusculas;
+	private int pontuacaoLetrasMinusculas;
+	private int pontuacaoNumeros;
+	private int pontuacaoSimbolos;
+	private int pontuacaoNumerosDoMeioOuSimbolos;
+	private int pontuacaoRequisitos;
+	private int pontuacaoApenasLetras;
+	private int pontuacaoApenasNumeros;
+	private int pontuacaoCaracteresRepetidos;
+	private int pontuacaoLetrasMaiusculasConsecutivas;
+	private int pontuacaoLetrasMinusculasConsecutivas;
+	private int pontuacaoNumerosConsecutivos;
+	private int pontuacaoTresOuMaisLetrasSequenciais;
+	private int pontuacaoTresOuMaisNumerosSequenciais;
+	private int pontuacaoTresOuMaisSimbolosSequenciais;
 	public String getComplexidade() {
 		return complexidade;
 	}
 	public void setComplexidade(String complexidade) {
 		this.complexidade = complexidade;
 	}
-	public Integer getNota() {
+	public int getNota() {
 		return nota;
 	}
-	public void setNota(Integer nota) {
+	public void setNota(int nota) {
 		this.nota = nota;
 	}
-	public Integer getNumeroDeCaracteres() {
+	public int getNumeroDeCaracteres() {
 		return numeroDeCaracteres;
 	}
-	public void setNumeroDeCaracteres(Integer numeroDeCaracteres) {
+	public void setNumeroDeCaracteres(int numeroDeCaracteres) {
 		this.numeroDeCaracteres = numeroDeCaracteres;
 	}
-	public Integer getLetrasMaiusculas() {
+	public int getLetrasMaiusculas() {
 		return letrasMaiusculas;
 	}
-	public void setLetrasMaiusculas(Integer letrasMaiusculas) {
+	public void setLetrasMaiusculas(int letrasMaiusculas) {
 		this.letrasMaiusculas = letrasMaiusculas;
 	}
-	public Integer getLetrasMinusculas() {
+	public int getLetrasMinusculas() {
 		return letrasMinusculas;
 	}
-	public void setLetrasMinusculas(Integer letrasMinusculas) {
+	public void setLetrasMinusculas(int letrasMinusculas) {
 		this.letrasMinusculas = letrasMinusculas;
 	}
-	public Integer getNumeros() {
+	public int getNumeros() {
 		return numeros;
 	}
-	public void setNumeros(Integer numeros) {
+	public void setNumeros(int numeros) {
 		this.numeros = numeros;
 	}
-	public Integer getSimbolos() {
+	public int getSimbolos() {
 		return simbolos;
 	}
-	public void setSimbolos(Integer simbolos) {
+	public void setSimbolos(int simbolos) {
 		this.simbolos = simbolos;
 	}
-	public Integer getNumerosDoMeioOuSimbolos() {
+	public int getNumerosDoMeioOuSimbolos() {
 		return numerosDoMeioOuSimbolos;
 	}
-	public void setNumerosDoMeioOuSimbolos(Integer numerosDoMeioOuSimbolos) {
+	public void setNumerosDoMeioOuSimbolos(int numerosDoMeioOuSimbolos) {
 		this.numerosDoMeioOuSimbolos = numerosDoMeioOuSimbolos;
 	}
-	public Integer getRequisitos() {
+	public int getRequisitos() {
 		return requisitos;
 	}
-	public void setRequisitos(Integer requisitos) {
+	public void setRequisitos(int requisitos) {
 		this.requisitos = requisitos;
 	}
-	public Integer getApenasLetras() {
+	public int getApenasLetras() {
 		return apenasLetras;
 	}
-	public void setApenasLetras(Integer apenasLetras) {
+	public void setApenasLetras(int apenasLetras) {
 		this.apenasLetras = apenasLetras;
 	}
-	public Integer getApenasNumeros() {
+	public int getApenasNumeros() {
 		return apenasNumeros;
 	}
-	public void setApenasNumeros(Integer apenasNumeros) {
+	public void setApenasNumeros(int apenasNumeros) {
 		this.apenasNumeros = apenasNumeros;
 	}
-	public Integer getCaracteresRepetidos() {
+	public int getCaracteresRepetidos() {
 		return caracteresRepetidos;
 	}
-	public void setCaracteresRepetidos(Integer caracteresRepetidos) {
+	public void setCaracteresRepetidos(int caracteresRepetidos) {
 		this.caracteresRepetidos = caracteresRepetidos;
 	}
-	public Integer getLetrasMaiusculasConsecutivas() {
+	public int getLetrasMaiusculasConsecutivas() {
 		return letrasMaiusculasConsecutivas;
 	}
-	public void setLetrasMaiusculasConsecutivas(Integer letrasMaiusculasConsecutivas) {
+	public void setLetrasMaiusculasConsecutivas(int letrasMaiusculasConsecutivas) {
 		this.letrasMaiusculasConsecutivas = letrasMaiusculasConsecutivas;
 	}
-	public Integer getLetrasMinusculasConsecutivas() {
+	public int getLetrasMinusculasConsecutivas() {
 		return letrasMinusculasConsecutivas;
 	}
-	public void setLetrasMinusculasConsecutivas(Integer letrasMinusculasConsecutivas) {
+	public void setLetrasMinusculasConsecutivas(int letrasMinusculasConsecutivas) {
 		this.letrasMinusculasConsecutivas = letrasMinusculasConsecutivas;
 	}
-	public Integer getNumerosConsecutivos() {
+	public int getNumerosConsecutivos() {
 		return numerosConsecutivos;
 	}
-	public void setNumerosConsecutivos(Integer numerosConsecutivos) {
+	public void setNumerosConsecutivos(int numerosConsecutivos) {
 		this.numerosConsecutivos = numerosConsecutivos;
 	}
-	public Integer getTresOuMaisLetrasSequenciais() {
+	public int getTresOuMaisLetrasSequenciais() {
 		return tresOuMaisLetrasSequenciais;
 	}
-	public void setTresOuMaisLetrasSequenciais(Integer tresOuMaisLetrasSequenciais) {
+	public void setTresOuMaisLetrasSequenciais(int tresOuMaisLetrasSequenciais) {
 		this.tresOuMaisLetrasSequenciais = tresOuMaisLetrasSequenciais;
 	}
-	public Integer getTresOuMaisNumerosSequenciais() {
+	public int getTresOuMaisNumerosSequenciais() {
 		return tresOuMaisNumerosSequenciais;
 	}
-	public void setTresOuMaisNumerosSequenciais(Integer tresOuMaisNumerosSequenciais) {
+	public void setTresOuMaisNumerosSequenciais(int tresOuMaisNumerosSequenciais) {
 		this.tresOuMaisNumerosSequenciais = tresOuMaisNumerosSequenciais;
 	}
-	public Integer getTresOuMaisSimbolosSequenciais() {
+	public int getTresOuMaisSimbolosSequenciais() {
 		return tresOuMaisSimbolosSequenciais;
 	}
-	public void setTresOuMaisSimbolosSequenciais(
-			Integer tresOuMaisSimbolosSequenciais) {
+	public void setTresOuMaisSimbolosSequenciais(int tresOuMaisSimbolosSequenciais) {
 		this.tresOuMaisSimbolosSequenciais = tresOuMaisSimbolosSequenciais;
 	}
-	public Integer getPontuacaoNumeroDeCaracteres() {
+	public int getPontuacaoNumeroDeCaracteres() {
 		return pontuacaoNumeroDeCaracteres;
 	}
-	public void setPontuacaoNumeroDeCaracteres(Integer pontuacaoNumeroDeCaracteres) {
+	public void setPontuacaoNumeroDeCaracteres(int pontuacaoNumeroDeCaracteres) {
 		this.pontuacaoNumeroDeCaracteres = pontuacaoNumeroDeCaracteres;
 	}
-	public Integer getPontuacaoLetrasMaiusculas() {
+	public int getPontuacaoLetrasMaiusculas() {
 		return pontuacaoLetrasMaiusculas;
 	}
-	public void setPontuacaoLetrasMaiusculas(Integer pontuacaoLetrasMaiusculas) {
+	public void setPontuacaoLetrasMaiusculas(int pontuacaoLetrasMaiusculas) {
 		this.pontuacaoLetrasMaiusculas = pontuacaoLetrasMaiusculas;
 	}
-	public Integer getPontuacaoLetrasMinusculas() {
+	public int getPontuacaoLetrasMinusculas() {
 		return pontuacaoLetrasMinusculas;
 	}
-	public void setPontuacaoLetrasMinusculas(Integer pontuacaoLetrasMinusculas) {
+	public void setPontuacaoLetrasMinusculas(int pontuacaoLetrasMinusculas) {
 		this.pontuacaoLetrasMinusculas = pontuacaoLetrasMinusculas;
 	}
-	public Integer getPontuacaoNumeros() {
+	public int getPontuacaoNumeros() {
 		return pontuacaoNumeros;
 	}
-	public void setPontuacaoNumeros(Integer pontuacaoNumeros) {
+	public void setPontuacaoNumeros(int pontuacaoNumeros) {
 		this.pontuacaoNumeros = pontuacaoNumeros;
 	}
-	public Integer getPontuacaoSimbolos() {
+	public int getPontuacaoSimbolos() {
 		return pontuacaoSimbolos;
 	}
-	public void setPontuacaoSimbolos(Integer pontuacaoSimbolos) {
+	public void setPontuacaoSimbolos(int pontuacaoSimbolos) {
 		this.pontuacaoSimbolos = pontuacaoSimbolos;
 	}
-	public Integer getPontuacaoNumerosDoMeioOuSimbolos() {
+	public int getPontuacaoNumerosDoMeioOuSimbolos() {
 		return pontuacaoNumerosDoMeioOuSimbolos;
 	}
 	public void setPontuacaoNumerosDoMeioOuSimbolos(
-			Integer pontuacaoNumerosDoMeioOuSimbolos) {
+			int pontuacaoNumerosDoMeioOuSimbolos) {
 		this.pontuacaoNumerosDoMeioOuSimbolos = pontuacaoNumerosDoMeioOuSimbolos;
 	}
-	public Integer getPontuacaoRequisitos() {
+	public int getPontuacaoRequisitos() {
 		return pontuacaoRequisitos;
 	}
-	public void setPontuacaoRequisitos(Integer pontuacaoRequisitos) {
+	public void setPontuacaoRequisitos(int pontuacaoRequisitos) {
 		this.pontuacaoRequisitos = pontuacaoRequisitos;
 	}
-	public Integer getPontuacaoApenasLetras() {
+	public int getPontuacaoApenasLetras() {
 		return pontuacaoApenasLetras;
 	}
-	public void setPontuacaoApenasLetras(Integer pontuacaoApenasLetras) {
+	public void setPontuacaoApenasLetras(int pontuacaoApenasLetras) {
 		this.pontuacaoApenasLetras = pontuacaoApenasLetras;
 	}
-	public Integer getPontuacaoApenasNumeros() {
+	public int getPontuacaoApenasNumeros() {
 		return pontuacaoApenasNumeros;
 	}
-	public void setPontuacaoApenasNumeros(Integer pontuacaoApenasNumeros) {
+	public void setPontuacaoApenasNumeros(int pontuacaoApenasNumeros) {
 		this.pontuacaoApenasNumeros = pontuacaoApenasNumeros;
 	}
-	public Integer getPontuacaoCaracteresRepetidos() {
+	public int getPontuacaoCaracteresRepetidos() {
 		return pontuacaoCaracteresRepetidos;
 	}
-	public void setPontuacaoCaracteresRepetidos(Integer pontuacaoCaracteresRepetidos) {
+	public void setPontuacaoCaracteresRepetidos(int pontuacaoCaracteresRepetidos) {
 		this.pontuacaoCaracteresRepetidos = pontuacaoCaracteresRepetidos;
 	}
-	public Integer getPontuacaoLetrasMaiusculasConsecutivas() {
+	public int getPontuacaoLetrasMaiusculasConsecutivas() {
 		return pontuacaoLetrasMaiusculasConsecutivas;
 	}
 	public void setPontuacaoLetrasMaiusculasConsecutivas(
-			Integer pontuacaoLetrasMaiusculasConsecutivas) {
+			int pontuacaoLetrasMaiusculasConsecutivas) {
 		this.pontuacaoLetrasMaiusculasConsecutivas = pontuacaoLetrasMaiusculasConsecutivas;
 	}
-	public Integer getPontuacaoLetrasMinusculasConsecutivas() {
+	public int getPontuacaoLetrasMinusculasConsecutivas() {
 		return pontuacaoLetrasMinusculasConsecutivas;
 	}
 	public void setPontuacaoLetrasMinusculasConsecutivas(
-			Integer pontuacaoLetrasMinusculasConsecutivas) {
+			int pontuacaoLetrasMinusculasConsecutivas) {
 		this.pontuacaoLetrasMinusculasConsecutivas = pontuacaoLetrasMinusculasConsecutivas;
 	}
-	public Integer getPontuacaoNumerosConsecutivos() {
+	public int getPontuacaoNumerosConsecutivos() {
 		return pontuacaoNumerosConsecutivos;
 	}
-	public void setPontuacaoNumerosConsecutivos(Integer pontuacaoNumerosConsecutivos) {
+	public void setPontuacaoNumerosConsecutivos(int pontuacaoNumerosConsecutivos) {
 		this.pontuacaoNumerosConsecutivos = pontuacaoNumerosConsecutivos;
 	}
-	public Integer getPontuacaoTresOuMaisLetrasSequenciais() {
+	public int getPontuacaoTresOuMaisLetrasSequenciais() {
 		return pontuacaoTresOuMaisLetrasSequenciais;
 	}
 	public void setPontuacaoTresOuMaisLetrasSequenciais(
-			Integer pontuacaoTresOuMaisLetrasSequenciais) {
+			int pontuacaoTresOuMaisLetrasSequenciais) {
 		this.pontuacaoTresOuMaisLetrasSequenciais = pontuacaoTresOuMaisLetrasSequenciais;
 	}
-	public Integer getPontuacaoTresOuMaisNumerosSequenciais() {
+	public int getPontuacaoTresOuMaisNumerosSequenciais() {
 		return pontuacaoTresOuMaisNumerosSequenciais;
 	}
 	public void setPontuacaoTresOuMaisNumerosSequenciais(
-			Integer pontuacaoTresOuMaisNumerosSequenciais) {
+			int pontuacaoTresOuMaisNumerosSequenciais) {
 		this.pontuacaoTresOuMaisNumerosSequenciais = pontuacaoTresOuMaisNumerosSequenciais;
 	}
-	public Integer getPontuacaoTresOuMaisSimbolosSequenciais() {
+	public int getPontuacaoTresOuMaisSimbolosSequenciais() {
 		return pontuacaoTresOuMaisSimbolosSequenciais;
 	}
 	public void setPontuacaoTresOuMaisSimbolosSequenciais(
-			Integer pontuacaoTresOuMaisSimbolosSequenciais) {
+			int pontuacaoTresOuMaisSimbolosSequenciais) {
 		this.pontuacaoTresOuMaisSimbolosSequenciais = pontuacaoTresOuMaisSimbolosSequenciais;
 	}
-
+	
 }

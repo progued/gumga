@@ -15,6 +15,6 @@ public class ValidadorController {
 		@ResponseBody
 		@RequestMapping(value="/validador", method=RequestMethod.POST, produces = "application/json")
 	    public Resultado validaSenha( @RequestParam(value = "senha", required = false, defaultValue = "") String senha) {
-			return Validador.validaSenha(senha);
+			return new Validador().validaSenha(senha);
 	    }
 }
